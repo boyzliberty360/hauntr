@@ -1,0 +1,46 @@
+{
+  "name": "hauntr",
+  "version": "0.1.0",
+  "description": "Your AI codebase engineer",
+  "type": "module",
+  "bin": {
+    "hauntr": "./src/cli/index.js"
+  },
+  "main": "./src/core/index.js",
+  "exports": {
+    ".": "./src/core/index.js",
+    "./rules": "./src/rules/index.js"
+  },
+  "scripts": {
+    "start": "node src/cli/index.js",
+    "test": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules ./node_modules/jest-cli/bin/jest.js --watch",
+    "lint": "eslint src/",
+    "prepublishOnly": "npm test && npm run lint"
+  },
+  "keywords": [
+    "cli",
+    "codebase",
+    "analysis",
+    "ai",
+    "linter"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "chalk": "^5.3.0",
+    "commander": "^11.0.0",
+    "glob": "^10.3.0",
+    "groq-sdk": "^1.1.1",
+    "openai": "^6.27.0",
+    "ora": "^7.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "jest": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

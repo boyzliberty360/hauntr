@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.hauntr/
+coverage/
+*.log
+.DS_Store

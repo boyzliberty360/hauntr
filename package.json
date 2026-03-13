@@ -4,7 +4,7 @@
   "description": "Your AI codebase engineer",
   "type": "module",
   "bin": {
-    "hauntr": "./src/cli/index.js"
+    "hauntr": "src/cli/index.js"
   },
   "main": "./src/core/index.js",
   "exports": {

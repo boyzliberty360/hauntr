@@ -29,7 +29,7 @@ export const reporter = {
     }
   },
 
-  _text({ files, issues }) {
+ _text({ issues }) {
     if (issues.length === 0) {
       console.log(chalk.green('\n  No issues found.\n'));
       return;
@@ -84,8 +84,6 @@ export const reporter = {
     ];
 
     if (issues.length > 0) {
-      const hasAI = issues.some((i) => i.ai);
-
       for (const issue of issues) {
         lines.push(`---\n`);
         lines.push(`### ${issue.severity === 'error' ? '🔴' : '⚠️'} \`${issue.rule}\``);

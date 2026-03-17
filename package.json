@@ -42,5 +42,9 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "funding": {
+    "type": "crypto",
+    "url": "https://hauntr-funding.netlify.app"
   }
 }

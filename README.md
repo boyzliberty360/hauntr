@@ -12,7 +12,7 @@
 
 **Hauntr scans your codebase, finds issues, and uses AI to explain exactly why they're a problem — with a ready-to-paste fix.**
 
-[Installation](#installation) · [Usage](#usage) · [AI Mode](#ai-mode) · [Configuration](#configuration) · [Rules](#built-in-rules) · [Custom Rules](#writing-custom-rules)
+[Installation](#installation) · [Usage](#usage) · [Auto-fix](#auto-fix) · [AI Mode](#ai-mode) · [Configuration](#configuration) · [Rules](#built-in-rules) · [Custom Rules](#writing-custom-rules)
 
 </div>
 
@@ -64,6 +64,9 @@ hauntr scan ./src
 # AI-powered explanations and fixes
 hauntr scan --ai
 
+# Auto-fix fixable issues
+hauntr fix
+
 # Save a markdown report
 hauntr scan --output markdown
 
@@ -73,6 +76,41 @@ hauntr scan --output json
 # Create a config file
 hauntr init
 ```
+
+---
+
+## Auto-fix
+
+Hauntr can automatically fix certain issues in place — no copy-pasting required.
+
+```bash
+# Fix all auto-fixable issues in the current directory
+hauntr fix
+
+# Fix a specific path
+hauntr fix ./src
+
+# Preview what would be fixed without writing any files
+hauntr fix --dry-run
+
+# Scan, report, and fix in one shot
+hauntr scan --fix
+
+# Scan, report, and preview fixes without writing files
+hauntr scan --fix --dry-run
+```
+
+Example output:
+
+```
+✔  Fixed 3 issues across 2 files
+   src/components/Dashboard.jsx
+   src/utils/helpers.js
+
+⚠  1 issue could not be auto-fixed — run `hauntr scan` to review
+```
+
+Only rules marked as `fixable` in the [Built-in Rules](#built-in-rules) table support auto-fix. Custom rules can opt in by implementing a `fix(content, issues)` method — see [Writing Custom Rules](#writing-custom-rules).
 
 ---
 
@@ -127,11 +165,11 @@ export default {
 
 ## Built-in Rules
 
-| Rule | What it catches | Fixable |
+| Rule | What it catches | Auto-fixable |
 |---|---|---|
-| `unusedImports` | Imported bindings never referenced in the file | Yes |
-| `largeComponents` | Component files over a line threshold (default: 300) | No |
-| `readmeCheck` | Missing README or missing Installation/Usage sections | No |
+| `unusedImports` | Imported bindings never referenced in the file | ✅ |
+| `largeComponents` | Component files over a line threshold (default: 300) | ❌ |
+| `readmeCheck` | Missing README or missing Installation/Usage sections | ❌ |
 
 Full documentation for each rule: [docs/rules.md](docs/rules.md)
 
@@ -181,6 +219,25 @@ registry.register('noConsole', noConsole);
 export default {
   rules: {
     noConsole: 'error',
+  },
+};
+```
+
+To make a custom rule auto-fixable, set `fixable: true` in `meta` and add a `fix(content, issues)` method that returns the corrected file content:
+
+```js
+export const myRule = {
+  meta: {
+    name: 'myRule',
+    description: '...',
+    fixable: true,
+  },
+
+  run(file, options = {}) { /* ... */ },
+
+  fix(content, issues) {
+    // Apply fixes to content and return the modified string
+    return content;
   },
 };
 ```

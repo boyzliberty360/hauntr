@@ -7,7 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2024-03-13
+## [0.2.0] - 2026-03-17
+
+### Added
+- `hauntr fix` — auto-fix fixable issues directly in your files
+- `hauntr fix --dry-run` — preview what would be fixed without writing any files
+- `hauntr scan --fix` — scan, report, and fix in a single command
+- `hauntr scan --fix --dry-run` — scan, report, and preview fixes without writing files
+- `fix(content, issues)` method on `unusedImports` rule — removes unused import lines and prunes unused bindings from named imports
+- `src/core/fixer.js` — core fix engine that applies rule `fix()` methods and writes results to disk
+- Custom rules can now opt into auto-fix by implementing a `fix(content, issues)` method
+
+## [0.1.0] - 2026-03-13
 
 ### Added
 - `hauntr scan` — scan a directory for code issues
